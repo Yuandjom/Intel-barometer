@@ -43,17 +43,40 @@ git clone https://github.com/Yuandjom/Intel-barometer.git
 ## Prerequitises
 ```
 sudo apt install python3-pip
-sudo pip install ansible
+sudo pip install "ansible==2.10.8"
 ```
 
 After clone the repository check the version of ansible 
 ```
-Ansible: 9.0
-Jinja 3.0 (note that this has to be <3.1, pip install jinja2<3.1)
+ansible --version
+ansible 2.10.8
+  config file = /home/Ayush/barometer/docker/ansible/ansible.cfg
+  configured module search path = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  executable location = /usr/bin/ansible
+  python version = 3.10.12 (main, Jun 11 2023, 05:26:28) [GCC 11.4.0]
+
+Name: Jinja2
+Version: 3.0.3
+Summary: A very fast and expressive template engine.
+Home-page: https://palletsprojects.com/p/jinja/
+Author: Armin Ronacher
+Author-email: armin.ronacher@active-4.com
+License: BSD-3-Clause
+Location: /usr/local/lib/python3.10/dist-packages
+Requires: MarkupSafe
+Required-by: ansible-core
+
+```
+Verison
+```
+Ansible: 2.10.8
+Jinja 3.0.3 (note that this has to be <3.1, pip install jinja2<3.1)
 ```
 
-Run the ansible script 
+Run the configurations and ansible script 
 ```
+ansible-galaxy install -r requirements.yml
 cd /barometer/docker/ansible
 sudo ansible-playbook -i default.inv collectd_service.yml
 ```
@@ -102,8 +125,4 @@ Solution
 cd barometer
 
 ansible-galaxy install -r requirements.yml
-```
-
-```
-
 ```
