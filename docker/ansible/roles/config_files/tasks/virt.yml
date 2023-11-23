@@ -1,0 +1,34 @@
+# Copyright 2018-21 Anuket, Intel Corporation and others
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+
+- name: check if libvirtd on host
+  shell: ps -ef | grep libvirtd | grep -v grep > /dev/null
+  register: libvirt_result
+  ignore_errors: "true"
+  tags:
+   - virt
+
+- name: (virt) check if rdt  is enabled
+  set_fact:
+    rdt_enabled: true
+  tags:
+    - rdt
+
+- name: enable virt plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['virt']) | unique }}"
+  when: libvirt_result is succeeded and not (rdt_enabled | default(false))
+  tags:
+   - virt

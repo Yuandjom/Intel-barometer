@@ -1,0 +1,12 @@
+*~
+*.sw?
+*.pyc
+/docs_output/
+/releng/
+*.egg-info/
+.*project
+.settings
+build
+dist
+.tox
+docs/_build/*

@@ -1,0 +1,53 @@
+# Copyright 2018-21 Anuket, Intel Corporation and others
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+
+- name: Check if vswitchd is running
+  shell: ps -ef | grep vswitchd | grep -v grep > /dev/null
+  register: vswitchd_running
+  ignore_errors: True
+  tags:
+     - ovs_stats
+     - ovs_events
+
+- name: Check if db.sock exists
+  stat:
+    path: /var/run/openvswitch/db.sock
+  register: dbsock_exists
+  ignore_errors: True
+  tags:
+     - ovs_stats
+     - ovs_events
+
+- name: enable ovs_stats plugin
+  set_fact:
+    collectd_plugins: '{{ collectd_plugins | union(["ovs_stats"]) | unique }}'
+    collectd_plugin_ovs_stats_port: "{{ ovs_stats_port if ovs_stats_port is defined else omit }}"
+    collectd_plugin_ovs_stats_address: "{{ ovs_stats_ip_addr if ovs_stats_ip_addr is defined else omit }}"
+    collectd_plugin_ovs_stats_interval: "{{ ovs_stats_interval if ovs_stats_interval is defined else omit }}"
+  when: (vswitchd_running is succeeded) and (dbsock_exists is succeeded)
+  tags:
+    - ovs_stats
+
+- name: enable ovs_events plugin
+  set_fact:
+    collectd_plugins: '{{ collectd_plugins | union(["ovs_events"]) | unique }}'
+    collectd_plugin_ovs_events_interval: "{{ ovs_events_interval if ovs_events_interval is defined else omit }}"
+    collectd_plugin_ovs_events_address: "{{ ovs_events_ip_addr if ovs_events_ip_addr is defined else omit }}"
+    collectd_plugin_ovs_events_port: "{{ ovs_events_port if ovs_events_port is defined else omit }}"
+  when: (vswitchd_running is succeeded) and (dbsock_exists is succeeded)
+  tags:
+    - ovs_events
+
+

@@ -1,0 +1,118 @@
+# Copyright 2018-21 OPNFV, Intel Corporation and Red Hat
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+- name: enable contextswitch  plugin
+  set_fact:
+     collectd_plugins: "{{ collectd_plugins | union(['contextswitch']) | unique }}"
+  tags:
+    - en_default_all
+    - contextswitch
+
+- name: enable cpu plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['cpu']) | unique }}"
+  tags:
+    - en_default_all
+    - cpu
+
+- name: enable cpufreq plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['cpufreq']) | unique }}"
+  tags:
+    - en_default_all
+    - cpufreq
+
+- name: enable df plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['df']) | unique }}"
+  tags:
+    - en_default_all
+    - df
+
+- name: enable disk plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['disk']) | unique }}"
+  tags:
+    - en_default_all
+    - disk
+
+- name: enable ethstat plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['ethstat']) | unique }}"
+  tags:
+    - en_default_all
+    - ethstat
+
+- name: enable ipc plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['ipc']) | unique }}"
+  tags:
+    - en_default_all
+    - ipc
+
+- name: enable irq plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['irq']) | unique }}"
+  tags:
+    - en_default_all
+    - irq
+
+- name: enable load plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['load']) | unique }}"
+  tags:
+    - en_default_all
+    - load
+
+- name: enable memory plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['memory']) | unique }}"
+  tags:
+    - en_default_all
+    - memory
+
+- name: enable numa plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['numa']) | unique }}"
+  tags:
+    - en_default_all
+    - numa
+
+- name: enable processes plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['processes']) | unique }}"
+  tags:
+    - en_default_all
+    - processes
+
+- name: enable swap plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['swap']) | unique }}"
+  tags:
+    - en_default_all
+    - swap
+
+- name: enable turbostat plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['turbostat']) | unique }}"
+  tags:
+    - en_default_all
+    - turbostat
+
+- name: enable uptime plugin
+  set_fact:
+    collectd_plugins: "{{ collectd_plugins | union(['uptime']) | unique }}"
+  tags:
+    - en_default_all
+    - uptime
